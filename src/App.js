@@ -4,8 +4,12 @@ import Enter from "./pages/Enter";
 import Following from "./pages/Following";
 import ForYou from "./pages/ForYou";
 import Profile from "./pages/Profile";
+import { useState } from "react";
+import { UserContext } from "./contexts/UserContext";
 
 function App() {
+  const [user, setUser] = useState({});
+  console.log(user);
   return (
     <Router>
       <main>
@@ -43,11 +47,13 @@ function App() {
             </MenuItem>
           </Toolbar>
         </AppBar>
-        <Routes>
-          <Route path="/" element={<ForYou />} />
-          <Route path="/following" element={<Following />} />
-          <Route path="/profile" element={<Enter />} />
-        </Routes>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Routes>
+            <Route path="/" element={<ForYou />} />
+            <Route path="/following" element={<Following />} />
+            <Route path="/profile" element={<Enter />} />
+          </Routes>
+        </UserContext.Provider>
       </main>
     </Router>
   );

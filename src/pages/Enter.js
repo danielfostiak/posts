@@ -1,120 +1,77 @@
 import React from "react";
 import {
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Grid,
-  Link,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { UserContext } from "../contexts/UserContext";
 import { auth } from "../firebase";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import EntranceForm from "./EntranceForm";
+import Profile from "./Profile";
+import { Button } from "@mui/material";
 
 function Enter() {
   const [isSigningIn, setSigningIn] = useState(false); //  true => SignIn, false => SignUp
+  const { user, setUser } = useContext(UserContext);
 
-  async function handleSignIn() {}
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
-  async function handleSignUp() {}
+  async function handleSignIn(form) {
+    const name = form[0].value;
+    const password = form[2].value;
+    console.log(form[0].value);
+  }
+
+  async function handleSignUp(form) {
+    const email = form[0].value;
+    const username = form[2].value;
+    const password = form[4].value;
+    const confirmPassword = form[6].value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, {
+        displayName: username,
+      });
+      setUser({ displayName: username });
+    } catch (error) {
+      alert(error.message);
+      console.log(error);
+    }
+  }
+
+  async function handleLogout() {
+    await signOut(auth);
+  }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    const username = e.target[0].value;
-    const password = e.target[2].value;
-    isSigningIn ? handleSignIn() : handleSignUp();
+    isSigningIn ? handleSignIn(e.target) : handleSignUp(e.target);
   }
 
   return (
-    <main>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          {isSigningIn ? "Sign In" : "Sign Up"}
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          {isSigningIn ? null : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="email"
-              autoFocus
-            />
-          )}
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          {isSigningIn ? null : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Confirm Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            {isSigningIn ? "Sign In" : "Sign Up"}
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link variant="body2" onClick={() => setSigningIn(!isSigningIn)}>
-                {isSigningIn
-                  ? "Have an account? Sign Up"
-                  : "Don't have an account? Sign In"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </main>
+    <>
+      {user ? (
+        <Profile handleLogout={handleLogout} user={user} />
+      ) : (
+        <EntranceForm
+          setSigningIn={setSigningIn}
+          isSigningIn={isSigningIn}
+          handleSubmit={handleSubmit}
+        />
+      )}
+
+      {/* <Button onClick={handleLogout}>Logout</Button> */}
+    </>
   );
 }
 
