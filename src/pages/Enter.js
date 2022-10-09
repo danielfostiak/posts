@@ -1,8 +1,8 @@
 import React from "react";
 import {
   createUserWithEmailAndPassword,
-  // signInWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -11,18 +11,50 @@ import { auth } from "../firebase";
 import { useState, useContext } from "react";
 import EntranceForm from "./EntranceForm";
 import Profile from "./Profile";
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 
 function Enter() {
   const [isSigningIn, setSigningIn] = useState(false); //  true => SignIn, false => SignUp
   const { user, setUser } = useContext(UserContext);
+  const usersCollectionRef = collection(db, "users");
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
   });
 
   async function handleSignIn(form) {
-    // const name = form[0].value;
-    // const password = form[2].value;
+    const name = form[0].value;
+    const password = form[2].value;
+
+    if (name.includes("@")) {
+      // email
+      const email = name;
+
+      signInWithEmailAndPassword(auth, email, password).catch((error) =>
+        alert(error.message)
+      );
+    } else {
+      // username
+      const data = await getDocs(usersCollectionRef);
+      const users = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      let email;
+
+      for (let user of users) {
+        if (name == user.id) {
+          email = user.email;
+        }
+      }
+
+      if (!email) {
+        alert("No user with that username found");
+        return;
+      }
+
+      signInWithEmailAndPassword(auth, email, password).catch((error) =>
+        alert(error.message)
+      );
+    }
   }
 
   async function handleSignUp(form) {
@@ -44,15 +76,26 @@ function Enter() {
       return;
     }
 
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(auth.currentUser, {
-        displayName: username,
-      });
-      setUser({ displayName: username });
-    } catch (error) {
-      alert(error.message);
+    const data = await getDocs(usersCollectionRef);
+    const users = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+    for (let user of users) {
+      if (username == user.id) {
+        alert("Username already exists");
+        return;
+      }
     }
+
+    await createUserWithEmailAndPassword(auth, email, password).catch((error) =>
+      alert(error.message)
+    );
+    await updateProfile(auth.currentUser, {
+      displayName: username,
+    });
+    await setDoc(doc(db, "users", username), {
+      email: email,
+    });
+    setUser({ displayName: username });
   }
 
   async function handleLogout() {

@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Enter from "./pages/Enter";
 import Following from "./pages/Following";
 import ForYou from "./pages/ForYou";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserContext } from "./contexts/UserContext";
 
 function App() {
   const [user, setUser] = useState({});
+
   return (
     <Router>
       <main>
