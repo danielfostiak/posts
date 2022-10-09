@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Enter from "./pages/Enter";
 import Following from "./pages/Following";
 import ForYou from "./pages/ForYou";
-import { useEffect, useState } from "react";
+import CustomProfile from "./pages/CustomProfile";
+import { useState } from "react";
 import { UserContext } from "./contexts/UserContext";
+import Profile from "./pages/Profile";
 
 function App() {
   const [user, setUser] = useState({});
@@ -44,7 +46,7 @@ function App() {
                 Following
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/enter">
+            <MenuItem component={Link} to={"/profile"}>
               <Typography
                 textAlign="center"
                 variant="h6"
@@ -60,7 +62,8 @@ function App() {
           <Routes>
             <Route path="/" element={<ForYou />} />
             <Route path="/following" element={<Following />} />
-            <Route path="/enter" element={<Enter />} />
+            <Route path="/profile" element={<Enter />} />
+            <Route path="/:username" element={<CustomProfile />} />
           </Routes>
         </UserContext.Provider>
       </main>

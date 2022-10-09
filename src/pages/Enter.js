@@ -111,6 +111,7 @@ function Enter() {
       {user ? (
         <Profile handleLogout={handleLogout} user={user} />
       ) : (
+        // <Navigate replace to={`/${user.displayName}`} />
         <EntranceForm
           setSigningIn={setSigningIn}
           isSigningIn={isSigningIn}
