@@ -109,8 +109,10 @@ function Enter() {
   return (
     <>
       {user ? (
+        // <p>{JSON.stringify(user)}</p>
         <Profile handleLogout={handleLogout} user={user} />
       ) : (
+        //
         // <Navigate replace to={`/${user.displayName}`} />
         <EntranceForm
           setSigningIn={setSigningIn}

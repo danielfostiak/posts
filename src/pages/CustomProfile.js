@@ -38,10 +38,10 @@ function CustomProfile() {
             }}
           >
             <Typography component="h1" variant="h3">
-              Profile
-            </Typography>
-            <Typography component="h3" variant="h6">
               Username: {userData.id}
+            </Typography>
+            <Typography component="h1" variant="h3">
+              Bio: {userData.bio}
             </Typography>
           </Box>
         )

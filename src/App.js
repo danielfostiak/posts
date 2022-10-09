@@ -7,10 +7,10 @@ import ForYou from "./pages/ForYou";
 import CustomProfile from "./pages/CustomProfile";
 import { useState } from "react";
 import { UserContext } from "./contexts/UserContext";
-import Profile from "./pages/Profile";
 
 function App() {
   const [user, setUser] = useState({});
+  const [userData, setUserData] = useState({});
 
   return (
     <Router>
