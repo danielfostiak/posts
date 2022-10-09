@@ -1,69 +1,52 @@
 import { Box, Typography } from "@mui/material";
+import Post from "../components/Post";
 import React from "react";
 
 function Following() {
   return (
     <main>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Posts
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Posts
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Posts
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Posts
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Posts
-        </Typography>
-      </Box>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
+      <Post
+        title="My first Post"
+        body="this is so cool wow"
+        author="danny"
+        time="09/10/22"
+      ></Post>
     </main>
   );
 }

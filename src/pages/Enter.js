@@ -70,7 +70,8 @@ function Enter() {
     if (
       username.includes("@") ||
       username.includes(".") ||
-      username.includes("!")
+      username.includes("!") ||
+      username.includes(" ")
     ) {
       alert("Usernames may not include any special characters");
       return;
@@ -109,11 +110,8 @@ function Enter() {
   return (
     <>
       {user ? (
-        // <p>{JSON.stringify(user)}</p>
         <Profile handleLogout={handleLogout} user={user} />
       ) : (
-        //
-        // <Navigate replace to={`/${user.displayName}`} />
         <EntranceForm
           setSigningIn={setSigningIn}
           isSigningIn={isSigningIn}
