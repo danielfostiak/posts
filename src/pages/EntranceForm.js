@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Grid,
-  Link,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
+import { Typography, Box, TextField, Button, Grid, Link } from "@mui/material";
 function EntranceForm(props) {
   const { isSigningIn, setSigningIn, handleSubmit } = props;
   return (
@@ -71,8 +62,7 @@ function EntranceForm(props) {
               name="password"
               label="Confirm Password"
               type="password"
-              id="password"
-              autoComplete="current-password"
+              id="password2"
             />
           )}
           <Button

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  // signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
   updateProfile,
@@ -11,7 +11,6 @@ import { auth } from "../firebase";
 import { useState, useContext } from "react";
 import EntranceForm from "./EntranceForm";
 import Profile from "./Profile";
-import { Button } from "@mui/material";
 
 function Enter() {
   const [isSigningIn, setSigningIn] = useState(false); //  true => SignIn, false => SignUp
@@ -22,9 +21,8 @@ function Enter() {
   });
 
   async function handleSignIn(form) {
-    const name = form[0].value;
-    const password = form[2].value;
-    console.log(form[0].value);
+    // const name = form[0].value;
+    // const password = form[2].value;
   }
 
   async function handleSignUp(form) {
@@ -37,6 +35,14 @@ function Enter() {
       alert("Passwords don't match");
       return;
     }
+    if (
+      username.includes("@") ||
+      username.includes(".") ||
+      username.includes("!")
+    ) {
+      alert("Usernames may not include any special characters");
+      return;
+    }
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -46,7 +52,6 @@ function Enter() {
       setUser({ displayName: username });
     } catch (error) {
       alert(error.message);
-      console.log(error);
     }
   }
 
@@ -69,8 +74,6 @@ function Enter() {
           handleSubmit={handleSubmit}
         />
       )}
-
-      {/* <Button onClick={handleLogout}>Logout</Button> */}
     </>
   );
 }

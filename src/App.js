@@ -1,20 +1,28 @@
 import { AppBar, MenuItem, Toolbar, Typography } from "@mui/material";
+import TagIcon from "@mui/icons-material/Tag";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Enter from "./pages/Enter";
 import Following from "./pages/Following";
 import ForYou from "./pages/ForYou";
-import Profile from "./pages/Profile";
 import { useState } from "react";
 import { UserContext } from "./contexts/UserContext";
 
 function App() {
   const [user, setUser] = useState({});
-  console.log(user);
   return (
     <Router>
       <main>
         <AppBar position="sticky">
-          <Toolbar>
+          <Toolbar sx={{ justifyContent: "flex-end" }}>
+            <TagIcon />
+            <Typography
+              textAlign="left"
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              Posts
+            </Typography>
             <MenuItem component={Link} to="/">
               <Typography
                 textAlign="center"
@@ -35,7 +43,7 @@ function App() {
                 Following
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/profile">
+            <MenuItem component={Link} to="/enter">
               <Typography
                 textAlign="center"
                 variant="h6"
@@ -51,7 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ForYou />} />
             <Route path="/following" element={<Following />} />
-            <Route path="/profile" element={<Enter />} />
+            <Route path="/enter" element={<Enter />} />
           </Routes>
         </UserContext.Provider>
       </main>
