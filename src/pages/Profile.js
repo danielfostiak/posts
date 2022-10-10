@@ -74,7 +74,7 @@ function Profile(props) {
       updatedUserData.posts.push({
         title: title,
         body: body,
-        time: time,
+        time: -time.seconds,
         id: `${username} ${time.seconds}`,
       });
     }
@@ -84,7 +84,7 @@ function Profile(props) {
     await setDoc(doc(db, "posts", `${username} ${time.seconds}`), {
       title: title,
       body: body,
-      time: time,
+      time: -time.seconds,
       author: username,
     });
     setCreatingPost(false);

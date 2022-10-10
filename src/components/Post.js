@@ -20,7 +20,7 @@ function Post(props) {
         {body}
       </Typography>
       <Typography component="h6" variant="h5">
-        {author}:{time}
+        By {author}
       </Typography>
     </Box>
   );
